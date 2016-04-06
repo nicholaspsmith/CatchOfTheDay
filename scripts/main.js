@@ -6,11 +6,18 @@ var ReactDOM = require('react-dom');
   Renders <StorePicker/>
 */
 
+//
+// To use emmett:
+// ctrl + e
+//
+
 var StorePicker = React.createClass({
 
   render: function() {
     return (
-      <p>hello</p>
+      <form action="">
+
+      </form>
     )
   }
 
