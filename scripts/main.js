@@ -15,8 +15,10 @@ var StorePicker = React.createClass({
 
   render: function() {
     return (
-      <form action="">
-
+      <form>
+        <h2>Please Enter a Store</h2>
+        <input type="text" ref="storeID"/>
+        <input type="submit"/>
       </form>
     )
   }
