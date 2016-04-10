@@ -14,10 +14,10 @@ var ReactDOM = require('react-dom');
 var StorePicker = React.createClass({
 
   render: function() {
-    var name = "nick";
     return (
       <form className="store-selector">
-        <h2>Please Enter a Store {name}</h2>
+        {/* This is the only way to make a comment :( */}
+        <h2>Please Enter a Store</h2>
         <input type="text" ref="storeID" required/>
         <input type="submit"/>
       </form>
