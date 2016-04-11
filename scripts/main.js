@@ -1,22 +1,82 @@
+/*
+ *  Nicholas P Smith
+ *  April 13, 2016
+ *  React For Beginners
+ *
+ *  App: Catch of the Day
+ *
+ *  Notes: to use Emmett: ctrl + e
+ */
+
+
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+/*
+  App
+*/
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <div className="catch-of-the-day">
+        <div className="menu">
+          <Header />
+        </div>
+        <Order/>
+        <Inventory/>
+      </div>
+    )
+  }
+});
+
+/*
+  Header
+*/
+
+var Header = React.createClass({
+  render: function() {
+    return (
+      <p>Header</p>
+    )
+  }
+});
+
+/*
+  Order
+*/
+
+var Order = React.createClass({
+  render: function() {
+    return (
+      <p>Order</p>
+    )
+  }
+});
+
+/*
+  Inventory
+*/
+
+var Inventory = React.createClass({
+  render: function() {
+    return (
+      <p>Inventory</p>
+    )
+  }
+});
 
 /*
   StorePicker
   Renders <StorePicker/>
 */
 
-//
-// To use emmett:
-// ctrl + e
-//
 
 var StorePicker = React.createClass({
 
   render: function() {
     return (
       <form className="store-selector">
-        {/* This is the only way to make a comment :( */}
         <h2>Please Enter a Store</h2>
         <input type="text" ref="storeID" required/>
         <input type="submit"/>
@@ -26,4 +86,4 @@ var StorePicker = React.createClass({
 
 });
 
-ReactDOM.render(<StorePicker/>, document.querySelector('#main'));
+ReactDOM.render(<App/>, document.querySelector('#main'));
