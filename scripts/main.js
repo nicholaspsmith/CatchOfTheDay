@@ -14,6 +14,7 @@ var ReactDOM = require('react-dom');
 
 /*
   App
+  <App/>
 */
 
 var App = React.createClass({
@@ -32,6 +33,7 @@ var App = React.createClass({
 
 /*
   Header
+  <Header/>
 */
 
 var Header = React.createClass({
@@ -44,6 +46,7 @@ var Header = React.createClass({
 
 /*
   Order
+  <Order/>
 */
 
 var Order = React.createClass({
@@ -56,6 +59,7 @@ var Order = React.createClass({
 
 /*
   Inventory
+  <Inventory/>
 */
 
 var Inventory = React.createClass({
@@ -68,7 +72,7 @@ var Inventory = React.createClass({
 
 /*
   StorePicker
-  Renders <StorePicker/>
+  <StorePicker/>
 */
 
 
