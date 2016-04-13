@@ -22,7 +22,7 @@ var App = React.createClass({
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-          <Header />
+          <Header tagline="Fresh Seafood Stuff" />
         </div>
         <Order/>
         <Inventory/>
@@ -39,7 +39,10 @@ var App = React.createClass({
 var Header = React.createClass({
   render: function() {
     return (
-      <p>Header</p>
+      <header className="top">
+        <h1>Catch of the Day</h1>
+        <h3 className="tagline">{this.props.tagline}</h3>
+      </header>
     )
   }
 });
