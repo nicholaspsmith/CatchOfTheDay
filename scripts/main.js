@@ -37,14 +37,22 @@ var App = React.createClass({
       order: {}
     }
   },
-  componentWillMount: function() {
-    console.log('componentWillMount');
-  },
   componentDidMount: function() {
     base.syncState(this.props.params.storeName + '/fishes', {
       context: this,
       state: 'fishes'
     });
+
+    var localStorageRef = localStorage.getItem('order-' + this.props.params.storeName);
+
+    if (localStorageRef) {
+      this.setState({
+        order: JSON.parse(localStorageRef)
+      });
+    }
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    localStorage.setItem('order-' + this.props.params.storeName, JSON.stringify(nextState.order));
   },
   addToOrder: function(key) {
     this.state.order[key] = this.state.order[key] + 1 || 1;
@@ -183,7 +191,7 @@ var Order = React.createClass({
     }
 
     return (
-      <li>
+      <li key={key}>
         <span>{count}</span>lbs
         {fish.name}
         <span className="price">{h.formatPrice(count * fish.price)}</span>
