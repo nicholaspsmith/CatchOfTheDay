@@ -37,6 +37,15 @@ var App = React.createClass({
       order: {}
     }
   },
+  componentWillMount: function() {
+    console.log('componentWillMount');
+  },
+  componentDidMount: function() {
+    base.syncState(this.props.params.storeName + '/fishes', {
+      context: this,
+      state: 'fishes'
+    });
+  },
   addToOrder: function(key) {
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({ order: this.state.order });
