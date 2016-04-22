@@ -209,10 +209,18 @@ var Order = React.createClass({
 
     return (
       <li key={key}>
-        <span>{count}</span>lbs
-        {fish.name}
-        <span className="price">{h.formatPrice(count * fish.price)}</span>
-      {removeButton}
+        <span>
+          <CSSTransitionGroup
+          component="span"
+          transitionName="count"
+          transitionLeaveTimeout={250}
+          transitionEnterTimeout={250}
+          >
+          <span key={count}>{count}</span>
+        </CSSTransitionGroup>
+        lbs {fish.name}
+        </span>
+        <span className="price">{h.formatPrice(count * fish.price)} {removeButton}</span>
       </li>
     )
   },
@@ -232,13 +240,19 @@ var Order = React.createClass({
     return (
       <div className="order-wrap">
         <h2 className="order-title">Your Order</h2>
-      <ul className="order">
+      <CSSTransitionGroup
+          className="order"
+          component="ul"
+          transitionName="order"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
           {orderIds.map(this.renderOrder)}
           <li className="total">
             <strong>Total:</strong>
             {h.formatPrice(total)}
           </li>
-        </ul>
+        </CSSTransitionGroup>
       </div>
     )
   }
