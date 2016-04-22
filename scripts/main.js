@@ -29,6 +29,12 @@ var base = Rebase.createClass('https://catch-of-the-day-8.firebaseio.com/');
 var Catalyst = require('react-catalyst');
 
 /*
+  Import Components
+*/
+
+import NotFound from './components/NotFound';
+
+/*
   App
   <App/>
 */
@@ -333,17 +339,6 @@ var StorePicker = React.createClass({
     )
   }
 
-});
-
-
-/*
-  Not Found
-*/
-
-var NotFound = React.createClass({
-  render: function() {
-    return <h1>Not found</h1>
-  }
 });
 
 /*
