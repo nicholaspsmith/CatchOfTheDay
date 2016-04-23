@@ -6,9 +6,83 @@
 import React from 'react';
 import AddFishForm from './AddFishForm';
 import autobind from 'autobind-decorator';
+import Firebase from 'firebase';
+const ref = new Firebase('https://catch-of-the-day-8.firebaseio.com/');
+
+
 
 @autobind
 class Inventory extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      uid: ''
+    }
+  }
+
+  componentWillMount() {
+    var token = localStorage.getItem('token');
+    if (token) {
+      ref.authWithCustomToken(token, this.authHandler);
+    }
+  }
+
+  logout() {
+    ref.unauth();
+    localStorage.removeItem('token');
+    this.setState({
+      uid: null
+    });
+  }
+
+  authenticate(provider) {
+    ref.authWithOAuthPopup(provider, this.authHandler);
+  }
+
+  authHandler(err, authData) {
+    if(err) {
+      console.error(err);
+      return;
+    }
+
+    // save the login token in browser
+    localStorage.setItem('token', authData.token);
+
+    const storeRef = ref.child(this.props.params.storeName);
+    storeRef.on('value', (snapshot) => {
+      var data = snapshot.val() || {};
+
+      if (!data.owner) {
+        // claim store as owner
+        storeRef.set({
+          owner: authData.uid
+        })
+      }
+
+      // update state to reflect current store owner and user
+      this.setState({
+        uid: authData.uid,
+        owner: data.owner || authData.uid
+      });
+    });
+  }
+
+  renderLogin() {
+    return (
+      <nav className="login">
+        <h2>Inventory</h2>
+        <p>Sign in to manage your inventory</p>
+        <button
+          className="github"
+          onClick={this.authenticate.bind(this, 'github')}>Log in with Github</button>
+        <button
+          className="facebook"
+          onClick={this.authenticate.bind(this, 'facebook')}>Log in with Facebook</button>
+      </nav>
+    )
+  }
 
   renderInventory(key) {
     var linkState = this.props.linkState;
@@ -28,13 +102,32 @@ class Inventory extends React.Component {
   }
 
   render() {
+    let logoutButton = <button onClick={this.logout}>Log Out</button>
+    // check for not-logged-in users
+    if (!this.state.uid) {
+      return (
+        <div>{this.renderLogin()}</div>
+      )
+    }
+
+    // check for wrong user
+    if (this.state.uid !== this.state.owner) {
+      return (
+        <div>
+          <p>Sorry, you are not the owner of this store</p>
+          {logoutButton}
+        </div>
+      )
+    }
     return (
       <div>
         <h2>Inventory</h2>
+        {logoutButton}
         {Object.keys(this.props.fishes).map(this.renderInventory)}
 
         <AddFishForm {...this.props} />
         <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
+
       </div>
     )
   }
